@@ -1,1 +1,18 @@
-<script src="validator.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Math Expression Validator</title>
+</head>
+<body>
+	<input type="text" name="expression" onchange="myFunction(this)">
+	<script src="validator.js"></script>
+	<script type="text/javascript">
+		function myFunction(value) {
+			var validated = validateMathExpression(value.value);
+			console.log(validated);
+		}
+	</script>
+</body>
+</html>
+
+

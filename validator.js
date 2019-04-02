@@ -58,6 +58,7 @@ function checkOperationOrder(expression) {
 				return false;
 			}
 			else {
+				lastWasMinus = false;
 				lastWasOperator = true;
 			}
 		}
@@ -65,6 +66,7 @@ function checkOperationOrder(expression) {
 
 		}
 		else {
+			lastWasMinus = false;
 			if(!lastWasOperator) {
 				return false;
 			}
@@ -88,7 +90,9 @@ function checkOperationOrder(expression) {
 		}
 
 	}
-
+	if(lastWasOperator) {
+		return false;
+	}
 
 	return true;
 }
@@ -128,6 +132,5 @@ function testValidator() {
 	console.log("Expect false - " + validateMathExpression("()a+b)(=(c)"))
 	console.log("Expect false - " + validateMathExpression("(a+b)=(c))"))
 	console.log("Expect true - " + validateMathExpression("(a+b)=(c)"))
+	console.log("Expect false - " + validateMathExpression("a+b+"))
 }
-
-testValidator()
