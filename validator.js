@@ -40,7 +40,9 @@ function checkOperationOrder(expression) {
 	var lastWasMinus = false;
 
 	for(var i=0;i<expression.length;i++) {
-
+		while(expression[i] == ' ') {
+			i++;
+		}
 		if(expression[i] == '=') {
 			if(lastWasOperator) {
 				return false;
@@ -81,7 +83,17 @@ function checkOperationOrder(expression) {
 				}
 				else if(isNumber(expression[i])) {
 					i++;
+					var comman = false;
 					while(isNumber(expression[i])) {
+
+						if(expression[i] == ',') {
+							if(comman) {
+								return false;
+							}
+							else {
+								comman = true;
+							}
+						}
 						i++;
 					}
 					i--;
@@ -102,7 +114,7 @@ function isCaracter(character) {
 }
 
 function isNumber(character) {
-	return (character >= '0' && character <= '9');
+	return ((character >= '0' && character <= '9')||(character == ','));
 }
 
 function isOperator(character) {
@@ -128,9 +140,13 @@ function testValidator() {
 	console.log("Expect false - " + validateMathExpression("a++b=c"));
 	console.log("Expect true - " + validateMathExpression("console+123456789=c"));
 	console.log("Expect false - " + validateMathExpression("a+b-=c"));
-	console.log("Expect true - " + validateMathExpression("(a+b)=(c)"))
-	console.log("Expect false - " + validateMathExpression("()a+b)(=(c)"))
-	console.log("Expect false - " + validateMathExpression("(a+b)=(c))"))
-	console.log("Expect true - " + validateMathExpression("(a+b)=(c)"))
-	console.log("Expect false - " + validateMathExpression("a+b+"))
+	console.log("Expect true - " + validateMathExpression("(a+b)=(c)"));
+	console.log("Expect false - " + validateMathExpression("()a+b)(=(c)"));
+	console.log("Expect false - " + validateMathExpression("(a+b)=(c))"));
+	console.log("Expect true - " + validateMathExpression("(a+b)=(c)"));
+	console.log("Expect false - " + validateMathExpression("a+b+"));
+	console.log("Expect false - " + validateMathExpression("3,1,4+5,15"));
+	console.log("Expect True - " + validateMathExpression("3,14+5,15"));
 }
+
+testValidator();
